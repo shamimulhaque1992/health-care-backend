@@ -16,6 +16,7 @@ import type {
   IResetPasswordPayload,
 } from "./auth.interface";
 import { redisClient } from "../../lib/redis";
+import { transporter } from "../../lib/nodemailer";
 
 const registerPatient = async (payload: IRegisterPatientPayload) => {
   const { name, password } = payload;
@@ -389,6 +390,13 @@ const forgotPassword = async (payload: IForgotPasswordPayload) => {
       value: expirationSeconds,
     },
   });
+
+  await transporter.sendMail({
+    to: isUserExists.email,
+    from: config.email_sender,
+    subject: "Forgot Password OTP",
+    html: `<p>Your OTP for password reset is: <strong>${otp}</strong></p><p>This OTP will expire in 5 minutes.</p>`,
+  });
 };
 const resetPassword = async (payload: IResetPasswordPayload) => {
   const { email, otp, newPassword } = payload;
@@ -445,6 +453,13 @@ const resetPassword = async (payload: IResetPasswordPayload) => {
   });
 
   await redisClient.del(key);
+
+  await transporter.sendMail({
+    to: isUserExists.email,
+    from: config.email_sender,
+    subject: "Password Reset Successful",
+    html: `<p>Your password has been reset successfully.</p>`,
+  });
 };
 
 export const AuthService = {

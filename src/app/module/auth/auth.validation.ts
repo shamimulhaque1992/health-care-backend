@@ -48,12 +48,10 @@ const ResetPasswordZodSchema = z.object({
 
     .regex(/[0-9]/, "Password must contain atleast 1 Number")
     .regex(/[^A-Za-z0-9]/, "Password must contain atleast 1 Special Character"),
-  otp: z.object({
-    otp: z
-      .string()
-      .length(6, "OTP must be 6 digits long")
-      .regex(/^[0-9]+$/, "OTP must be numeric"),
-  }),
+  otp: z
+    .string()
+    .length(6, "OTP must be 6 digits long")
+    .regex(/^[0-9]+$/, "OTP must be numeric"),
 });
 
 export const UserValidation = {
