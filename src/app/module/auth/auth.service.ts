@@ -11,6 +11,7 @@ import { transporter } from "../../lib/nodemailer";
 import { prisma } from "../../lib/prisma";
 import { redisClient } from "../../lib/redis";
 import { jwtUtils } from "../../utils/jwt";
+import { sendEmail } from "../../utils/sendEmail";
 import type {
 	IForgotPasswordPayload,
 	IGoogleLoginPayload,
@@ -20,7 +21,6 @@ import type {
 	IResetPasswordPayload,
 	IVerifyEmailPayload,
 } from "./auth.interface";
-import { sendEmail } from "../../utils/sendEmail";
 
 const registerPatient = async (payload: IRegisterPatientPayload) => {
 	const { name, password, patient: patientData } = payload;
@@ -396,24 +396,34 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 					},
 				},
 			});
+
+			await sendEmail(
+				"googl-register-success.ejs",
+				{ name: googleIdTokenPayload.name, email: googleIdTokenPayload.email },
+				{
+					from: config.email_sender,
+					to: googleIdTokenPayload.email,
+					subject: "Google Registration Successful",
+				},
+			);
 		}
 
-		user = await prisma.user.create({
-			data: {
-				email: googleIdTokenPayload.email,
-				name: googleIdTokenPayload.name,
-				googleId: googleIdTokenPayload.sub,
-				role: Role.PATIENT,
-				status: UserStatus.ACTIVE,
-				emailVerified: true,
-				patient: {
-					create: {
-						email: googleIdTokenPayload.email,
-						name: googleIdTokenPayload.name,
-					},
-				},
-			},
-		});
+		// user = await prisma.user.create({
+		// 	data: {
+		// 		email: googleIdTokenPayload.email,
+		// 		name: googleIdTokenPayload.name,
+		// 		googleId: googleIdTokenPayload.sub,
+		// 		role: Role.PATIENT,
+		// 		status: UserStatus.ACTIVE,
+		// 		emailVerified: true,
+		// 		patient: {
+		// 			create: {
+		// 				email: googleIdTokenPayload.email,
+		// 				name: googleIdTokenPayload.name,
+		// 			},
+		// 		},
+		// 	},
+		// });
 	}
 	if (!user) {
 		throw new Error(
