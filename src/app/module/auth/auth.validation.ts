@@ -37,6 +37,13 @@ const LoginZodSchema = z.object({
 const ForgotPasswordZodSchema = z.object({
 	email: z.email(),
 });
+const VerifyEmailZodSchema = z.object({
+	email: z.email(),
+	otp: z
+		.string()
+		.length(6, "OTP must be 6 digits long")
+		.regex(/^[0-9]+$/, "OTP must be numeric"),
+});
 
 const ResetPasswordZodSchema = z.object({
 	email: z.email(),
@@ -56,6 +63,7 @@ const ResetPasswordZodSchema = z.object({
 
 export const UserValidation = {
 	PatientRegistrationZodSchema,
+	VerifyEmailZodSchema,
 	LoginZodSchema,
 	ForgotPasswordZodSchema,
 	ResetPasswordZodSchema,

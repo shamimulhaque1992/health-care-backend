@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Your Email</title>
+  </head>
+
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7fb;
+      font-family: Arial, Helvetica, sans-serif;
+    "
+  >
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      style="background-color: #f4f7fb; padding: 40px 20px"
+    >
+      <tr>
+        <td align="center">
+          <table
+            width="100%"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            style="
+              max-width: 560px;
+              background-color: #ffffff;
+              border-radius: 12px;
+              overflow: hidden;
+              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            "
+          >
+            <!-- Header -->
+            <tr>
+              <td
+                style="
+                  background-color: #2563eb;
+                  padding: 28px 30px;
+                  text-align: center;
+                "
+              >
+                <h1 style="margin: 0; color: #ffffff; font-size: 24px">
+                  Verify Your Email
+                </h1>
+              </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+              <td style="padding: 40px 35px">
+                <p style="margin: 0 0 18px; color: #1f2937; font-size: 16px">
+                  Hello
+                  <strong><%= name %></strong>
+                  ,
+                </p>
+
+                <p
+                  style="
+                    margin: 0 0 20px;
+                    color: #4b5563;
+                    font-size: 15px;
+                    line-height: 1.6;
+                  "
+                >
+                  Thank you for creating an account with us. Please verify your
+                  email address using the verification code below.
+                </p>
+
+                <!-- Email -->
+                <div
+                  style="
+                    background-color: #f8fafc;
+                    border-radius: 8px;
+                    padding: 14px 18px;
+                    margin-bottom: 25px;
+                    text-align: center;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0 0 5px;
+                      color: #64748b;
+                      font-size: 12px;
+                      text-transform: uppercase;
+                      letter-spacing: 0.5px;
+                    "
+                  >
+                    Email Address
+                  </p>
+
+                  <p
+                    style="
+                      margin: 0;
+                      color: #1f2937;
+                      font-size: 15px;
+                      font-weight: bold;
+                    "
+                  >
+                    <%= email %>
+                  </p>
+                </div>
+
+                <!-- OTP -->
+                <div
+                  style="
+                    background-color: #eff6ff;
+                    border-radius: 10px;
+                    padding: 22px;
+                    text-align: center;
+                    margin: 25px 0;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0 0 8px;
+                      color: #64748b;
+                      font-size: 13px;
+                      text-transform: uppercase;
+                      letter-spacing: 1px;
+                    "
+                  >
+                    Verification Code
+                  </p>
+
+                  <div
+                    style="
+                      color: #2563eb;
+                      font-size: 34px;
+                      font-weight: bold;
+                      letter-spacing: 8px;
+                    "
+                  >
+                    <%= otp %>
+                  </div>
+                </div>
+
+                <p
+                  style="
+                    margin: 0 0 20px;
+                    color: #4b5563;
+                    font-size: 14px;
+                    line-height: 1.6;
+                    text-align: center;
+                  "
+                >
+                  This verification code will expire in
+                  <strong><%= expirationMinutes %> minutes</strong>
+                  .
+                </p>
+
+                <!-- Security Notice -->
+                <div
+                  style="
+                    background-color: #fefce8;
+                    border-left: 4px solid #eab308;
+                    padding: 15px 18px;
+                    margin: 25px 0;
+                  "
+                >
+                  <p
+                    style="
+                      margin: 0;
+                      color: #475569;
+                      font-size: 13px;
+                      line-height: 1.6;
+                    "
+                  >
+                    <strong>Security notice:</strong>
+                    Never share this verification code with anyone. Our team
+                    will never ask you for your OTP.
+                  </p>
+                </div>
+
+                <p
+                  style="
+                    margin: 25px 0 0;
+                    color: #6b7280;
+                    font-size: 13px;
+                    line-height: 1.6;
+                  "
+                >
+                  If you did not create an account using this email address, you
+                  can safely ignore this email.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                style="
+                  background-color: #f8fafc;
+                  padding: 20px 30px;
+                  text-align: center;
+                  border-top: 1px solid #e5e7eb;
+                "
+              >
+                <p style="margin: 0; color: #94a3b8; font-size: 12px">
+                  This is an automated email. Please do not reply.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

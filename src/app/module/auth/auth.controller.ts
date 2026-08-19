@@ -7,10 +7,20 @@ import { AuthService } from "./auth.service";
 
 const registerPatient = catchAsync(async (req: Request, res: Response) => {
 	const payload = req.body;
-	const result = await AuthService.registerPatient(payload);
+	await AuthService.registerPatient(payload);
+
+	sendResponse(res, {
+		statusCode: httpStatus.CREATED,
+		success: true,
+		message: "Verification email sent to your email address successfully",
+		data: null,
+	});
+});
+const verifyUserEmail = catchAsync(async (req: Request, res: Response) => {
+	const payload = req.body;
+	const result = await AuthService.verifyUserEmail(payload);
 
 	const { accessToken, refreshToken, user, patient } = result;
-
 	res.cookie("accessToken", accessToken, {
 		httpOnly: true,
 		secure: false,
@@ -25,15 +35,10 @@ const registerPatient = catchAsync(async (req: Request, res: Response) => {
 	});
 
 	sendResponse(res, {
-		statusCode: httpStatus.CREATED,
+		statusCode: httpStatus.OK,
 		success: true,
-		message: "Patient registered successfully",
-		data: {
-			accessToken,
-			refreshToken,
-			user,
-			patient,
-		},
+		message: "Email verified successfully",
+		data: { accessToken, refreshToken, user, patient },
 	});
 });
 
@@ -167,6 +172,7 @@ const resetPassword = catchAsync(async (req: Request, res: Response) => {
 
 export const AuthController = {
 	registerPatient,
+	verifyUserEmail,
 	loginUser,
 	getMe,
 	refreshToken,
