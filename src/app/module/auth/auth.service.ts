@@ -4,7 +4,7 @@ import ejs from "ejs";
 import type { TokenPayload } from "google-auth-library";
 import type { JwtPayload, SignOptions } from "jsonwebtoken";
 import path from "path";
-import { Role, UserStatus } from "../../../generated/prisma/enums";
+import { AuthProvider, Role, UserStatus } from "../../../generated/prisma/enums";
 import config from "../../config";
 import { googleClient } from "../../lib/googleAuth";
 import { transporter } from "../../lib/nodemailer";
@@ -202,6 +202,7 @@ const loginUser = async (payload: ILoginUserPayload) => {
 	if (user.isDeleted || user.status === UserStatus.DELETED) {
 		throw new Error("User is deleted");
 	}
+	console.log(user, "user");
 
 	if (user.password === null && user.googleId) {
 		throw new Error(
@@ -385,6 +386,7 @@ const googleLogin = async (payload: IGoogleLoginPayload) => {
 					email: googleIdTokenPayload.email,
 					name: googleIdTokenPayload.name,
 					googleId: googleIdTokenPayload.sub,
+					authProvider: AuthProvider.GOOGLE,
 					role: Role.PATIENT,
 					status: UserStatus.ACTIVE,
 					emailVerified: true,
