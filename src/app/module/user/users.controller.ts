@@ -13,13 +13,13 @@ const uploadImage = catchAsync(
 			throw new Error("No file uploaded");
 		}
 
-		await userServices.uploadImage(file, userId);
+		const result = await userServices.uploadImage(file, userId);
 
 		sendResponse(res, {
 			success: true,
 			statusCode: httpStatus.OK,
 			message: "Profile image uploaded successfully",
-			data: null,
+			data: result,
 		});
 	},
 );
